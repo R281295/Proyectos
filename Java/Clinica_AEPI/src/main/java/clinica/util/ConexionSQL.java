@@ -22,34 +22,6 @@ public class ConexionSQL {
     	
     }
     
-    public String Visualizar(int ID, int COL) {
-    	String[] datos = new String[7];
-    	try {
-    		conn = DriverManager.getConnection("jdbc:sqlite:data/clinica.db");
-	        String query = "SELECT * FROM CLINICA WHERE ID = "+ID;
-	        pst = conn.prepareStatement(query);
-	        rs = pst.executeQuery();
-	        
-	        if(rs.next()) {
-	        	if(rs != null) {
-		            datos[0] = rs.getString(2);
-		            datos[1] = rs.getString(3);
-		            datos[2] = rs.getString(4);
-		            datos[3] = rs.getString(5);
-		            datos[4] = rs.getString(6);
-		            datos[5] = rs.getString(7);
-		            datos[6] = rs.getString(8);
-	        	}
-	        }
-	        rs.close();
-	        pst.close();
-	        conn.close();
-    	}catch(Exception e) {
-    		System.out.println("Error al visualizar los datos: "+e.getMessage());
-    	}
-    	return datos[COL];
-        
-    }
     
     public HashMap<Integer, ArrayList<String>> getAllData() {
     	HashMap<Integer, ArrayList<String>> allData = new HashMap<>();
@@ -115,22 +87,10 @@ public class ConexionSQL {
     
     public void Eliminar(int id) {
     	try {
-//	        conn = DriverManager.getConnection("jdbc:sqlite:data/clinica.db");
-//	        
-//	        String query = "DELETE FROM CLINICA WHERE ID = '"+id+"'";
-//	        PreparedStatement pst = conn.prepareStatement(query);
-//	        pst.executeUpdate();
-//	        
-//	        pst.close();
-//	        conn.close();
-	        
-	        
     		EntityManager manager = ConstValues.emf.createEntityManager();
 	    	manager.getTransaction().begin();
 	    	manager.remove(manager.find(Cliente.class, id));
 	    	manager.getTransaction().commit();
-	        
-	        
     	}catch(Exception e) {
     		System.out.println("Error al eliminar cliente: "+e.getMessage());
     	}
@@ -139,18 +99,10 @@ public class ConexionSQL {
 
     public int cuentaRegistros() {
     	int filas = 0;
-    	try {
-	        conn = DriverManager.getConnection("jdbc:sqlite:data/clinica.db");
-	        String query = "SELECT COUNT(*) FROM CLINICA";
-	        PreparedStatement pst = conn.prepareStatement(query);
-	        ResultSet rs = pst.executeQuery();
-	        filas = rs.getInt(1);
-	        rs.close();
-	        pst.close();
-	        conn.close();
-    	}catch(Exception e) {
-    		System.out.println("Error al contar filas: "+e.getMessage());
-    	}
+    	
+    	EntityManager manager = ConstValues.emf.createEntityManager();
+    	filas = Integer.parseInt(manager.createQuery("SELECT COUNT(*) FROM CLINICA").getResultList().get(0).toString());
+    	
         return filas;
     }
     

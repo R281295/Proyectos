@@ -27,7 +27,6 @@ public class Visualizar extends JFrame {
 //        setResizable(false);
         setLocationRelativeTo(null);
         
-        //Se va a utilizar un GridBagLayout para colocar los componentes
         layout = new GridBagLayout();
         constraints = new GridBagConstraints();
         
@@ -36,7 +35,6 @@ public class Visualizar extends JFrame {
         panel.setLayout(layout);
         
         
-        //Se crean todos los objetos y se añaden al JPanel con sus correspondientes restricciones
         
         /* ----ETIQUETAS---- */
         vis_l_nombre = new JLabel("Buscar:");
@@ -89,14 +87,10 @@ public class Visualizar extends JFrame {
         panel_botones.add(vis_b_aceptar);
         panel_botones.add(vis_b_cancelar);
         
-        //Les añado un "nombre" propio a cada botón para distinguir que boton he pulsado
-        //ya que en todas las ventanas se llaman igual
         vis_b_aceptar.setActionCommand("vis_aceptar");
         vis_b_cancelar.setActionCommand("vis_cancelar");
         
         panel.add(panel_botones, constraints);
-        
-        
         setContentPane(panel);
     }
     
