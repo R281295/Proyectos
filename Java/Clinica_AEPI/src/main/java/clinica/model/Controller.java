@@ -19,26 +19,26 @@ import clinica.view.Visualizar;
 
 public class Controller implements ActionListener {
     
-    Formulario_Insertar_Editar ins;
-    Visualizar vis;
-    Eliminar el;
-    ConexionSQL sql;
+    Formulario_Insertar_Editar formInsertEdit;
+    Visualizar visualizar;
+    Eliminar eliminar;
+    ConexionSQL connection;
     private int idEditandose;
     
-    public Controller(Formulario_Insertar_Editar ins, Visualizar vis, Eliminar el) {
-        this.ins = ins;
-        this.vis = vis;
-        this.el = el;
+    public Controller(Formulario_Insertar_Editar formInsertEdit, Visualizar visualizar, Eliminar eliminar) {
+        this.formInsertEdit = formInsertEdit;
+        this.visualizar = visualizar;
+        this.eliminar = eliminar;
     }
     
 
     public void mostrarDatosEnTabla() {
         try {
-            sql = new ConexionSQL();
-            HashMap<Integer, ArrayList<String>> allData = sql.getAllData();
+        	connection = new ConexionSQL();
+            HashMap<Integer, ArrayList<String>> allData = connection.getAllData();
             for(int fila = 0 ; fila <allData.size() ; fila++) {
                 for(int columna = 0 ; columna < allData.get(fila).size() ; columna++) {
-                    vis.vis_table.setValueAt(allData.get(fila).get(columna), fila, columna);
+                    visualizar.getTabla().setValueAt(allData.get(fila).get(columna), fila, columna);
                 }
             }
         } catch(Exception e) {
@@ -53,21 +53,21 @@ public class Controller implements ActionListener {
         String boton = e.getActionCommand();
         switch(boton) {
             case "ins_aceptar":
-            	if(ins.getTitle().equals(ConstValues.tituloVentanaInsertar)) {
+            	if(formInsertEdit.getTitle().equals(ConstValues.TITULO_VENTANA_INSERTAR)) {
 	                try { //Este try valida que la fecha introducida no sea incorrecta como por ejemplo un 30 de febrero
-	                    LocalDate fecha = LocalDate.of(Integer.parseInt(String.valueOf(ins.ins_c_anho.getSelectedItem())), ins.ins_c_mes.getSelectedIndex(), ins.ins_c_dia.getSelectedIndex());
+	                    LocalDate fecha = LocalDate.of(Integer.parseInt(String.valueOf(formInsertEdit.getFormComboAnho().getSelectedItem())), formInsertEdit.getFormComboMes().getSelectedIndex(), formInsertEdit.getFormComboDia().getSelectedIndex());
 	                    if(0 > fecha.compareTo(LocalDate.now())){ //Se comprueba que la fecha introducida no sea anterior a la fecha actual
-	                        JOptionPane.showMessageDialog(ins, "La fecha introducida es anterior a la fecha actual", "ERROR", JOptionPane.ERROR_MESSAGE);
+	                        JOptionPane.showMessageDialog(formInsertEdit, "La fecha introducida es anterior a la fecha actual", "ERROR", JOptionPane.ERROR_MESSAGE);
 	                    } else {
 	                        try {
-	                            sql = new ConexionSQL();
-	                            if (sql.Insertar(ins.ins_t_nombre.getText(), ins.ins_t_apellidos.getText(), ins.ins_t_dni.getText(), ins.ins_t_direccion.getText(), ins.ins_t_telefono.getText(), fecha.toString(), ins.ins_c_especialista.getSelectedItem().toString())) { 
-	                                JOptionPane.showMessageDialog(null, "Cliente insertado correctamente", ConstValues.tituloVentanaInsertar, JOptionPane.INFORMATION_MESSAGE);
-	                                ins.ins_t_nombre.setText("");
-	                                ins.ins_t_apellidos.setText("");
-	                                ins.ins_t_dni.setText("");
-	                                ins.ins_t_direccion.setText("");
-	                                ins.ins_t_telefono.setText("");
+	                        	connection = new ConexionSQL();
+	                            if (connection.insertarClienteBBDD(formInsertEdit.getFormTextNombre().getText(), formInsertEdit.getFormTextApellidos().getText(), formInsertEdit.getFormTextDni().getText(), formInsertEdit.getFormTextDireccion().getText(), formInsertEdit.getFormTextTelefono().getText(), fecha.toString(), formInsertEdit.getFormComboEspecialista().getSelectedItem().toString())) { 
+	                                JOptionPane.showMessageDialog(null, "Cliente insertado correctamente", ConstValues.TITULO_VENTANA_INSERTAR, JOptionPane.INFORMATION_MESSAGE);
+	                                formInsertEdit.getFormTextNombre().setText("");
+	                                formInsertEdit.getFormTextApellidos().setText("");
+	                                formInsertEdit.getFormTextDni().setText("");
+	                                formInsertEdit.getFormTextDireccion().setText("");
+	                                formInsertEdit.getFormTextTelefono().setText("");
 	                            }
 	                        } catch (Exception ex) {
 	                            System.out.println("Error: "+ex.toString());
@@ -75,30 +75,30 @@ public class Controller implements ActionListener {
 	                    }
 	                } catch(Exception ex) {
 	                    System.out.println("Funciona");
-	                    JOptionPane.showMessageDialog(ins, "La fecha introducida no existe", "ERROR", JOptionPane.ERROR_MESSAGE);
+	                    JOptionPane.showMessageDialog(formInsertEdit, "La fecha introducida no existe", "ERROR", JOptionPane.ERROR_MESSAGE);
 	                }
             	} else {
             		
             		
             		
             		try { //Este try valida que la fecha introducida no sea incorrecta como por ejemplo un 30 de febrero
-	                    LocalDate fecha = LocalDate.of(Integer.parseInt(String.valueOf(ins.ins_c_anho.getSelectedItem())), ins.ins_c_mes.getSelectedIndex(), ins.ins_c_dia.getSelectedIndex());
+	                    LocalDate fecha = LocalDate.of(Integer.parseInt(String.valueOf(formInsertEdit.getFormComboAnho().getSelectedItem())), formInsertEdit.getFormComboMes().getSelectedIndex(), formInsertEdit.getFormComboDia().getSelectedIndex());
 	                    if(0 > fecha.compareTo(LocalDate.now())){ //Se comprueba que la fecha introducida no sea anterior a la fecha actual
-	                        JOptionPane.showMessageDialog(ins, "La fecha introducida es anterior a la fecha actual", "ERROR", JOptionPane.ERROR_MESSAGE);
+	                        JOptionPane.showMessageDialog(formInsertEdit, "La fecha introducida es anterior a la fecha actual", "ERROR", JOptionPane.ERROR_MESSAGE);
 	                    } else {
 	                        try {
-	                            sql = new ConexionSQL();
-	                            if (sql.Editar(idEditandose, ins.ins_t_nombre.getText(), ins.ins_t_apellidos.getText(), ins.ins_t_dni.getText(), ins.ins_t_direccion.getText(), ins.ins_t_telefono.getText(), fecha.toString(), ins.ins_c_especialista.getSelectedItem().toString())) { 
-	                                JOptionPane.showMessageDialog(null, "Cliente editado correctamente", ConstValues.tituloVentanaEditar, JOptionPane.INFORMATION_MESSAGE);
+	                        	connection = new ConexionSQL();
+	                            if (connection.editarClienteBBDD(idEditandose, formInsertEdit.getFormTextNombre().getText(), formInsertEdit.getFormTextApellidos().getText(), formInsertEdit.getFormTextDni().getText(), formInsertEdit.getFormTextDireccion().getText(), formInsertEdit.getFormTextTelefono().getText(), fecha.toString(), formInsertEdit.getFormComboEspecialista().getSelectedItem().toString())) { 
+	                                JOptionPane.showMessageDialog(null, "Cliente editado correctamente", ConstValues.TITULO_VENTANA_EDITAR, JOptionPane.INFORMATION_MESSAGE);
 //	                                ins.setVisible(false);
-	                                ins.dispose();
+	                                formInsertEdit.dispose();
 	                            }
 	                        } catch (Exception ex) {
 	                            System.out.println("Error: "+ex.toString());
 	                        }
 	                    }
 	                } catch(Exception ex) {
-	                    JOptionPane.showMessageDialog(ins, "La fecha introducida no existe", "ERROR", JOptionPane.ERROR_MESSAGE);
+	                    JOptionPane.showMessageDialog(formInsertEdit, "La fecha introducida no existe", "ERROR", JOptionPane.ERROR_MESSAGE);
 	                }
             		
             		
@@ -106,8 +106,8 @@ public class Controller implements ActionListener {
             	}
                 break;
             case "ins_cancelar":
-                ins.setVisible(false);
-                ins.dispose();
+                formInsertEdit.setVisible(false);
+                formInsertEdit.dispose();
                 break;
             case "vis_aceptar":
                 /*   Con esto se filtran los nombres en la tabla.
@@ -119,37 +119,21 @@ public class Controller implements ActionListener {
                       ... ...
                 No sólo busca por nombre, si no también por apellidos, id, teléfono... cualquier campo.
                 */
-                DefaultTableModel model = (DefaultTableModel) vis.vis_table.getModel();
+                DefaultTableModel model = (DefaultTableModel) visualizar.getTabla().getModel();
                 TableRowSorter<DefaultTableModel> filtra = new TableRowSorter<>(model);
-                vis.vis_table.setRowSorter(filtra);
-                filtra.setRowFilter(RowFilter.regexFilter(vis.vis_t_nombre.getText()));
+                visualizar.getTabla().setRowSorter(filtra);
+                filtra.setRowFilter(RowFilter.regexFilter(visualizar.getVisualizarTextBuscar().getText()));
                 break;
             case "vis_cancelar":
-                vis.setVisible(false);
-                vis.dispose();
+                visualizar.setVisible(false);
+                visualizar.dispose();
                 break;
             case "el_aceptar":
-                try {
-                    sql = new ConexionSQL();
-                    try {
-                    	int id = Integer.parseInt(el.el_t_id.getText());
-                    	if(sql.comprobarSiExisteID(id)) {
-	                    	sql.Eliminar(id);
-	                        JOptionPane.showMessageDialog(ins, "Cliente eliminado correctamente", "Eliminar", JOptionPane.INFORMATION_MESSAGE);
-	                        el.el_t_id.setText("");
-                    	} else {
-                    		System.out.println("El ID introducido no existe"); //TODO JOptionPane
-                    	}
-                    } catch(Exception ex) {
-                    	System.out.println("El ID introducido no es correcto."); //TODO JOptionPane
-                    }
-                } catch (Exception ex) {
-                    System.out.println("Error desconocido: "+ex.toString());
-                }
+                eliminarCliente();
                 break;
             case "el_cancelar":
-                el.setVisible(false);
-                el.dispose();
+                eliminar.setVisible(false);
+                eliminar.dispose();
                 break;
                 
         }
@@ -157,19 +141,35 @@ public class Controller implements ActionListener {
     
     public void rellenarFormulario(int id) {
     	idEditandose = id;
-    	sql = new ConexionSQL();
-    	Cliente cliente = sql.getCliente(id);
-    	ins.ins_t_nombre.setText(cliente.getNombre());
-    	ins.ins_t_apellidos.setText(cliente.getApellidos());
-    	ins.ins_t_dni.setText(cliente.getDni());
-    	ins.ins_t_direccion.setText(cliente.getDireccion());
-    	ins.ins_t_telefono.setText(cliente.getTelefono());
+    	connection = new ConexionSQL();
+    	Cliente cliente = connection.getClienteOfBBDD(id);
+    	formInsertEdit.getFormTextNombre().setText(cliente.getNombre());
+    	formInsertEdit.getFormTextApellidos().setText(cliente.getApellidos());
+    	formInsertEdit.getFormTextDni().setText(cliente.getDni());
+    	formInsertEdit.getFormTextDireccion().setText(cliente.getDireccion());
+    	formInsertEdit.getFormTextTelefono().setText(cliente.getTelefono());
     	//2020-04-03
     	String[] fecha = cliente.getFecha().split("-");
-    	ins.ins_c_dia.setSelectedIndex(Integer.parseInt(fecha[2]));
-    	ins.ins_c_mes.setSelectedIndex(Integer.parseInt(fecha[1]));
-    	ins.ins_c_anho.setSelectedItem(fecha[0]);
-    	ins.ins_c_especialista.setSelectedItem(cliente.getEspecialista());
+    	formInsertEdit.getFormComboDia().setSelectedIndex(Integer.parseInt(fecha[2]));
+    	formInsertEdit.getFormComboMes().setSelectedIndex(Integer.parseInt(fecha[1]));
+    	formInsertEdit.getFormComboAnho().setSelectedItem(fecha[0]);
+    	formInsertEdit.getFormComboEspecialista().setSelectedItem(cliente.getEspecialista());
+    }
+    
+    public void eliminarCliente() {
+    	connection = new ConexionSQL();
+        try {
+        	int id = Integer.parseInt(eliminar.getEliminarTextId().getText());
+        	if(connection.comprobarSiExisteID(id)) {
+        		connection.eliminarClienteBBDD(id);
+                JOptionPane.showMessageDialog(formInsertEdit, "Cliente eliminado correctamente", ConstValues.TITULO_VENTANA_ELIMINAR, JOptionPane.INFORMATION_MESSAGE);
+                eliminar.getEliminarTextId().setText("");
+        	} else {
+        		JOptionPane.showMessageDialog(formInsertEdit, "El ID introducido no existe", ConstValues.TITULO_VENTANA_ELIMINAR, JOptionPane.INFORMATION_MESSAGE);
+        	}
+        } catch(Exception ex) {
+        	JOptionPane.showMessageDialog(formInsertEdit, "El ID introducido no es correcto.", ConstValues.TITULO_VENTANA_ELIMINAR, JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
 }

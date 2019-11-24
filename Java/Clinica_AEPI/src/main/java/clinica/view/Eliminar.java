@@ -11,9 +11,9 @@ public class Eliminar extends JFrame {
     private JPanel panel, panel_botones;
     private GridBagLayout layout;
     private GridBagConstraints constraints;
-    private JLabel el_l_id;
-    public JTextField el_t_id;
-    public JButton el_b_aceptar, el_b_cancelar;
+    private JLabel eliminarLabelId;
+    private JTextField eliminarTextId;
+    private JButton eliminarBtnAceptar, eliminarBtnCancelar;
     
     public Eliminar() {
         setTitle("Eliminar");
@@ -33,43 +33,43 @@ public class Eliminar extends JFrame {
         //Se crean todos los objetos y se añaden al JPanel con sus correspondientes restricciones
         
         /* ----ETIQUETAS---- */
-        el_l_id = new JLabel("ID");
+        eliminarLabelId = new JLabel("ID");
         constraints.gridx = 0;
         constraints.gridy = 0;
         constraints.gridheight = 1;
         constraints.gridwidth = 1;
         constraints.weighty = 1;
         constraints.anchor = GridBagConstraints.WEST;
-        panel.add(el_l_id, constraints);
+        panel.add(eliminarLabelId, constraints);
         
         
         /* ----TEXTFIELD---- */
-        el_t_id = new JTextField();
+        eliminarTextId = new JTextField();
         constraints.gridx = 1;
         constraints.gridy = 0;
         constraints.gridwidth = 2;
         constraints.weightx = 1;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.ipadx = 0;
-        panel.add(el_t_id, constraints);
+        panel.add(eliminarTextId, constraints);
         
         
         /* ----BOTONES---- */
         panel_botones = new JPanel();
-        el_b_aceptar = new JButton("Aceptar");
-        el_b_cancelar = new JButton("Cancelar");
+        eliminarBtnAceptar = new JButton("Aceptar");
+        eliminarBtnCancelar = new JButton("Cancelar");
         constraints.gridy = 2;
         constraints.gridwidth = 1;
         constraints.fill = GridBagConstraints.NONE;
         constraints.anchor = GridBagConstraints.EAST;
         
-        panel_botones.add(el_b_aceptar);
-        panel_botones.add(el_b_cancelar);
+        panel_botones.add(eliminarBtnAceptar);
+        panel_botones.add(eliminarBtnCancelar);
         
         //Les añado un "nombre" propio a cada botón para distinguir que boton he pulsado
         //ya que en todas las ventanas se llaman igual
-        el_b_aceptar.setActionCommand("el_aceptar");
-        el_b_cancelar.setActionCommand("el_cancelar");
+        eliminarBtnAceptar.setActionCommand("el_aceptar");
+        eliminarBtnCancelar.setActionCommand("el_cancelar");
         
         panel.add(panel_botones, constraints);
         
@@ -78,8 +78,12 @@ public class Eliminar extends JFrame {
     }
     
     public void conectarControlador(Controller c) {
-        el_b_aceptar.addActionListener(c);
-        el_b_cancelar.addActionListener(c);
+    	eliminarBtnAceptar.addActionListener(c);
+        eliminarBtnCancelar.addActionListener(c);
+    }
+    
+    public JTextField getEliminarTextId() {
+    	return eliminarTextId;
     }
     
 

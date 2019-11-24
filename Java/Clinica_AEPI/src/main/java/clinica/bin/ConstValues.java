@@ -5,9 +5,14 @@ import javax.persistence.Persistence;
 
 public class ConstValues {
 	
-	public final static EntityManagerFactory emf = Persistence.createEntityManagerFactory("Persistence");
+	public final static EntityManagerFactory EMF = Persistence.createEntityManagerFactory("Persistence");
 	
-	public final static String[] camposCliente = {	"ID",
+	/**
+	 * Nombre de la tabla de BBDD
+	 */
+	public final static String CLINICA = "CLINICA";
+	
+	public final static String[] CAMPOS_CLIENTE = {	"ID",
 													"Nombre",
 													"Apellidos",
 													"DNI",
@@ -16,9 +21,9 @@ public class ConstValues {
 													"Fecha",
 													"Especialista"};
 
-	public final static String tituloVentanaVisualizar = "Visualizar";
-	public final static String tituloVentanaInsertar = "Insertar";
-	public final static String tituloVentanaEditar = "Editar";
-	public final static String tituloVentanaEliminar = "Eliminar";
+	public final static String TITULO_VENTANA_VISUALIZAR = "Visualizar";
+	public final static String TITULO_VENTANA_INSERTAR = "Insertar";
+	public final static String TITULO_VENTANA_EDITAR = "Editar";
+	public final static String TITULO_VENTANA_ELIMINAR = "Eliminar";
 
 }

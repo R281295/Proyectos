@@ -14,19 +14,11 @@ import clinica.model.Cliente;
 
 public class ConexionSQL {
     
-    private Connection conn;
-    private ResultSet rs;
-    private PreparedStatement pst;
-    
-    public ConexionSQL() {
-    	
-    }
-    
     
     public HashMap<Integer, ArrayList<String>> getAllData() {
     	HashMap<Integer, ArrayList<String>> allData = new HashMap<>();
     	
-    	EntityManager manager = ConstValues.emf.createEntityManager();
+    	EntityManager manager = ConstValues.EMF.createEntityManager();
     	
     	ArrayList<Cliente> clientes = (ArrayList<Cliente>) manager.createQuery("FROM "+ConstValues.CLINICA).getResultList();
     	
@@ -37,11 +29,11 @@ public class ConexionSQL {
     	return allData;
     }
     
-    public boolean Insertar(String nombre, String apellidos, String dni, String direccion, String telefono, String fecha, String especialista) {
+    public boolean insertarClienteBBDD(String nombre, String apellidos, String dni, String direccion, String telefono, String fecha, String especialista) {
     	boolean insertadoCorrectamente = false;
     	
     	try {
-	    	EntityManager manager = ConstValues.emf.createEntityManager();
+	    	EntityManager manager = ConstValues.EMF.createEntityManager();
 	    	Cliente cliente = new Cliente(nombre, apellidos, dni, direccion, telefono, fecha, especialista);
 	    	
 	    	manager.getTransaction().begin();
@@ -59,10 +51,10 @@ public class ConexionSQL {
     }
     
     
-    public boolean Editar(int id, String nombre, String apellidos, String dni, String direccion, String telefono, String fecha, String especialista) {
+    public boolean editarClienteBBDD(int id, String nombre, String apellidos, String dni, String direccion, String telefono, String fecha, String especialista) {
     	boolean editadoCorrectamente = false;
     	try {
-	    	EntityManager manager = ConstValues.emf.createEntityManager();
+	    	EntityManager manager = ConstValues.EMF.createEntityManager();
 	    	Cliente cliente = manager.find(Cliente.class, id);
 	    	
 	    	manager.getTransaction().begin();
@@ -85,9 +77,9 @@ public class ConexionSQL {
     }
     
     
-    public void Eliminar(int id) {
+    public void eliminarClienteBBDD(int id) {
     	try {
-    		EntityManager manager = ConstValues.emf.createEntityManager();
+    		EntityManager manager = ConstValues.EMF.createEntityManager();
 	    	manager.getTransaction().begin();
 	    	manager.remove(manager.find(Cliente.class, id));
 	    	manager.getTransaction().commit();
@@ -100,21 +92,21 @@ public class ConexionSQL {
     public int cuentaRegistros() {
     	int filas = 0;
     	
-    	EntityManager manager = ConstValues.emf.createEntityManager();
+    	EntityManager manager = ConstValues.EMF.createEntityManager();
     	filas = Integer.parseInt(manager.createQuery("SELECT COUNT(*) FROM "+ConstValues.CLINICA).getResultList().get(0).toString());
     	
         return filas;
     }
     
-    public Cliente getCliente(int id) {
-    	EntityManager manager = ConstValues.emf.createEntityManager();
+    public Cliente getClienteOfBBDD(int id) {
+    	EntityManager manager = ConstValues.EMF.createEntityManager();
     	Cliente cliente = manager.find(Cliente.class, id);
     	return cliente;
     }
     
     public boolean comprobarSiExisteID(int id) {
     	boolean existe = false;
-    	EntityManager manager = ConstValues.emf.createEntityManager();
+    	EntityManager manager = ConstValues.EMF.createEntityManager();
     	Cliente cliente = manager.find(Cliente.class, id);
     	if(cliente != null) {
     		existe = true;

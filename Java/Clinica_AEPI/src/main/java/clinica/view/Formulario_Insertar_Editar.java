@@ -5,6 +5,7 @@ import java.awt.GridBagLayout;
 import java.time.LocalDate;
 import javax.swing.*;
 
+import clinica.bin.ConstValues;
 import clinica.model.Controller;
 
 public class Formulario_Insertar_Editar extends JFrame {
@@ -12,13 +13,13 @@ public class Formulario_Insertar_Editar extends JFrame {
     private JPanel panel, panel_botones;
     private GridBagLayout layout;
     private GridBagConstraints constraints;
-    private JLabel ins_l_nombre, ins_l_apellidos, ins_l_dni, ins_l_direccion, ins_l_telefono, ins_l_fecha, ins_l_especialista;
-    public JTextField ins_t_nombre, ins_t_apellidos, ins_t_dni, ins_t_direccion, ins_t_telefono;
-    public JComboBox ins_c_dia, ins_c_mes, ins_c_anho, ins_c_especialista;
-    public JButton ins_b_aceptar, ins_b_cancelar;
+    private JLabel formLabelNombre, formLabelApellidos, formLabelDni, formLabelDireccion, formLabelTelefono, formLabelFecha, formLabelEspecialista;
+    private JTextField formTextNombre, formTextApellidos, formTextDni, formTextDireccion, formTextTelefono;
+    private JComboBox formComboDia, formComboMes, formComboAnho, formComboEspecialista;
+    private JButton formBtnAceptar, formBtnCancelar;
     
     public Formulario_Insertar_Editar() {
-        setTitle("Insertar");
+//        setTitle(ConstValues.TITULO_VENTANA_INSERTAR);
         setSize(500, 350);
         setResizable(false);
         setLocationRelativeTo(null);
@@ -35,104 +36,104 @@ public class Formulario_Insertar_Editar extends JFrame {
         //Se crean todos los objetos y se añaden al JPanel con sus correspondientes restricciones
         
         /* ----ETIQUETAS---- */
-        ins_l_nombre = new JLabel("Nombre");
+        formLabelNombre = new JLabel("Nombre");
         constraints.gridx = 0;
         constraints.gridy = 0;
         constraints.gridheight = 1;
         constraints.gridwidth = 1;
         constraints.weighty = 1;
         constraints.anchor = GridBagConstraints.WEST;
-        panel.add(ins_l_nombre, constraints);
+        panel.add(formLabelNombre, constraints);
         
-        ins_l_apellidos = new JLabel("Apellidos");
+        formLabelApellidos = new JLabel("Apellidos");
         constraints.gridy = 1;
-        panel.add(ins_l_apellidos, constraints);
+        panel.add(formLabelApellidos, constraints);
         
-        ins_l_dni = new JLabel("DNI");
+        formLabelDni = new JLabel("DNI");
         constraints.gridy = 2;
-        panel.add(ins_l_dni, constraints);
+        panel.add(formLabelDni, constraints);
         
-        ins_l_direccion = new JLabel("Dirección");
+        formLabelDireccion = new JLabel("Dirección");
         constraints.gridy = 3;
-        panel.add(ins_l_direccion, constraints);
+        panel.add(formLabelDireccion, constraints);
         
-        ins_l_telefono = new JLabel("Teléfono");
+        formLabelTelefono = new JLabel("Teléfono");
         constraints.gridy = 4;
-        panel.add(ins_l_telefono, constraints);
+        panel.add(formLabelTelefono, constraints);
         
-        ins_l_fecha = new JLabel("Fecha");
+        formLabelFecha = new JLabel("Fecha");
         constraints.gridy = 5;
-        panel.add(ins_l_fecha, constraints);
+        panel.add(formLabelFecha, constraints);
         
-        ins_l_especialista = new JLabel("Especialista");
+        formLabelEspecialista = new JLabel("Especialista");
         constraints.gridy = 6;
         constraints.ipadx = 20;
-        panel.add(ins_l_especialista, constraints);
+        panel.add(formLabelEspecialista, constraints);
         
         
         /* ----TEXTFIELD---- */
-        ins_t_nombre = new JTextField();
+        formTextNombre = new JTextField();
         constraints.gridx = 1;
         constraints.gridy = 0;
         constraints.gridwidth = 3;
         constraints.weightx = 1;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.ipadx = 0;
-        panel.add(ins_t_nombre, constraints);
+        panel.add(formTextNombre, constraints);
         
-        ins_t_apellidos = new JTextField();
+        formTextApellidos = new JTextField();
         constraints.gridy = 1;
-        panel.add(ins_t_apellidos, constraints);
+        panel.add(formTextApellidos, constraints);
         
-        ins_t_dni = new JTextField();
+        formTextDni = new JTextField();
         constraints.gridy = 2;
-        panel.add(ins_t_dni, constraints);
+        panel.add(formTextDni, constraints);
         
-        ins_t_direccion = new JTextField();
+        formTextDireccion = new JTextField();
         constraints.gridy = 3;
-        panel.add(ins_t_direccion, constraints);
+        panel.add(formTextDireccion, constraints);
         
-        ins_t_telefono = new JTextField();
+        formTextTelefono = new JTextField();
         constraints.gridy = 4;
-        panel.add(ins_t_telefono, constraints);
+        panel.add(formTextTelefono, constraints);
         
         
         /* ----COMBOBOX---- */
-        ins_c_dia = new JComboBox();
+        formComboDia = new JComboBox();
         String[] dia = new String[32];   //Array que almacenará todos los días
         dia[0] = "Día";                  //El primer elemento se reserva para escribir "Día"
         for(int i = 1 ; i<=31 ; i++) {   //Y el buclo comienza en 1 porque el 0 ya está ocupado
             dia[i] = String.valueOf(i);
         }
-        ins_c_dia.setModel(new DefaultComboBoxModel(dia)); //Se añaden todos los días al combo
+        formComboDia.setModel(new DefaultComboBoxModel(dia)); //Se añaden todos los días al combo
         constraints.gridy = 5;
         constraints.gridwidth = 1;
-        panel.add(ins_c_dia, constraints);
+        panel.add(formComboDia, constraints);
         
-        ins_c_mes = new JComboBox();
-        ins_c_mes.setModel(new DefaultComboBoxModel(new String[] {"Mes", "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"}));
+        formComboMes = new JComboBox();
+        formComboMes.setModel(new DefaultComboBoxModel(new String[] {"Mes", "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"}));
         constraints.gridx = 2;
-        panel.add(ins_c_mes, constraints);
+        panel.add(formComboMes, constraints);
         
-        ins_c_anho = new JComboBox();     //El combo del año siempre va a tener el año actual y el año siguiente, ya que no se van a dar citas para dentro de más de 1 año
-        ins_c_anho.setModel(new DefaultComboBoxModel(new String[] {"Año", String.valueOf(LocalDate.now().getYear()), String.valueOf(LocalDate.now().getYear()+1)}));
+        formComboAnho = new JComboBox();     //El combo del año siempre va a tener el año actual y el año siguiente, ya que no se van a dar citas para dentro de más de 1 año
+        formComboAnho.setModel(new DefaultComboBoxModel(new String[] {"Año", String.valueOf(LocalDate.now().getYear()), String.valueOf(LocalDate.now().getYear()+1)}));
         constraints.gridx = 3;
-        panel.add(ins_c_anho, constraints);
+        panel.add(formComboAnho, constraints);
         
-        ins_c_especialista = new JComboBox();
-        ins_c_especialista.setModel(new DefaultComboBoxModel(new String[] { "Oftalmólogo", "Odontólogo", "Otorrinolaringólogo", "Cardiólogo", "Dermatólogo", "Traumatólogo", "Reumatólogo", "Psiquiatra" }));
+        formComboEspecialista = new JComboBox();
+        formComboEspecialista.setModel(new DefaultComboBoxModel(new String[] { "Oftalmólogo", "Odontólogo", "Otorrinolaringólogo", "Cardiólogo", "Dermatólogo", "Traumatólogo", "Reumatólogo", "Psiquiatra" }));
         constraints.gridy = 6;
         constraints.gridx = 1;
         constraints.gridwidth = 3;
         constraints.weightx = 1;
         constraints.fill = GridBagConstraints.HORIZONTAL;
-        panel.add(ins_c_especialista, constraints);
+        panel.add(formComboEspecialista, constraints);
         
         
         /* ----BOTONES---- */
         panel_botones = new JPanel();
-        ins_b_aceptar = new JButton("Aceptar");
-        ins_b_cancelar = new JButton("Cancelar");
+        formBtnAceptar = new JButton("Aceptar");
+        formBtnCancelar = new JButton("Cancelar");
         constraints.gridx = 3;
         constraints.gridy = 7;
         constraints.gridwidth = 1;
@@ -141,11 +142,11 @@ public class Formulario_Insertar_Editar extends JFrame {
         
         //Les añado un "nombre" propio a cada botón para distinguir que boton he pulsado
         //ya que en todas las ventanas se llaman igual
-        ins_b_aceptar.setActionCommand("ins_aceptar");
-        ins_b_cancelar.setActionCommand("ins_cancelar");
+        formBtnAceptar.setActionCommand("ins_aceptar");
+        formBtnCancelar.setActionCommand("ins_cancelar");
         
-        panel_botones.add(ins_b_aceptar);
-        panel_botones.add(ins_b_cancelar);
+        panel_botones.add(formBtnAceptar);
+        panel_botones.add(formBtnCancelar);
         
         panel.add(panel_botones, constraints);
         
@@ -154,8 +155,44 @@ public class Formulario_Insertar_Editar extends JFrame {
     }
     
     public void conectarControlador(Controller c) {
-        ins_b_aceptar.addActionListener(c);
-        ins_b_cancelar.addActionListener(c);
+    	formBtnAceptar.addActionListener(c);
+    	formBtnCancelar.addActionListener(c);
     }
+    
+    public JTextField getFormTextNombre() {
+    	return formTextNombre;
+    }
+    
+	public JTextField getFormTextApellidos() {
+		return formTextApellidos;
+	}
+	
+	public JTextField getFormTextDni() {
+		return formTextDni;
+	}
+	
+	public JTextField getFormTextDireccion() {
+		return formTextDireccion;
+	}
+	
+	public JTextField getFormTextTelefono() {
+		return formTextTelefono;
+	}
+	
+	public JComboBox<String> getFormComboDia() {
+		return formComboDia;
+	}
+	
+	public JComboBox<String> getFormComboMes() {
+		return formComboMes;
+	}
+	
+	public JComboBox<String> getFormComboAnho() {
+		return formComboAnho;
+	}
+	
+	public JComboBox<String> getFormComboEspecialista() {
+		return formComboEspecialista;
+	}
 
 }
