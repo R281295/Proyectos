@@ -3,7 +3,6 @@ package clinica.view;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.sql.SQLException;
-import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 import clinica.bin.ConstValues;
@@ -22,7 +21,7 @@ public class Visualizar extends JFrame {
     public JButton vis_b_aceptar, vis_b_cancelar;
     
     public Visualizar() {
-        setTitle("Visualizar");
+        setTitle(ConstValues.tituloVentanaVisualizar);
         setSize(1000, 600);
 //        setResizable(false);
         setLocationRelativeTo(null);

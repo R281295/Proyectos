@@ -62,7 +62,7 @@ public class Controller implements ActionListener {
 	                        try {
 	                            sql = new ConexionSQL();
 	                            if (sql.Insertar(ins.ins_t_nombre.getText(), ins.ins_t_apellidos.getText(), ins.ins_t_dni.getText(), ins.ins_t_direccion.getText(), ins.ins_t_telefono.getText(), fecha.toString(), ins.ins_c_especialista.getSelectedItem().toString())) { 
-	                                JOptionPane.showMessageDialog(null, "Cliente insertado correctamente", "Insertar", JOptionPane.INFORMATION_MESSAGE);
+	                                JOptionPane.showMessageDialog(null, "Cliente insertado correctamente", ConstValues.tituloVentanaInsertar, JOptionPane.INFORMATION_MESSAGE);
 	                                ins.ins_t_nombre.setText("");
 	                                ins.ins_t_apellidos.setText("");
 	                                ins.ins_t_dni.setText("");
@@ -98,7 +98,6 @@ public class Controller implements ActionListener {
 	                        }
 	                    }
 	                } catch(Exception ex) {
-	                    System.out.println("Funciona");
 	                    JOptionPane.showMessageDialog(ins, "La fecha introducida no existe", "ERROR", JOptionPane.ERROR_MESSAGE);
 	                }
             		
@@ -107,7 +106,6 @@ public class Controller implements ActionListener {
             	}
                 break;
             case "ins_cancelar":
-                System.out.println("i Cancelar");
                 ins.setVisible(false);
                 ins.dispose();
                 break;

@@ -28,7 +28,7 @@ public class ConexionSQL {
     	
     	EntityManager manager = ConstValues.emf.createEntityManager();
     	
-    	ArrayList<Cliente> clientes = (ArrayList<Cliente>) manager.createQuery("FROM CLINICA").getResultList();
+    	ArrayList<Cliente> clientes = (ArrayList<Cliente>) manager.createQuery("FROM "+ConstValues.CLINICA).getResultList();
     	
     	for(int i=0 ; i<clientes.size() ; i++) {
     		allData.put(i, clientes.get(i).getClienteArray());
@@ -101,7 +101,7 @@ public class ConexionSQL {
     	int filas = 0;
     	
     	EntityManager manager = ConstValues.emf.createEntityManager();
-    	filas = Integer.parseInt(manager.createQuery("SELECT COUNT(*) FROM CLINICA").getResultList().get(0).toString());
+    	filas = Integer.parseInt(manager.createQuery("SELECT COUNT(*) FROM "+ConstValues.CLINICA).getResultList().get(0).toString());
     	
         return filas;
     }
