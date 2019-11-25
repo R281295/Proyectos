@@ -2,9 +2,12 @@ package bin;
 
 public class ConstValues {
 	
-	public static final String diccionario = "abcdefghijklmnÃ±opqrstuvwxyz"
-											+ "ABCDEFGHIJKLMNÃ‘OPQRSTUVWXYZ"
+	public static final String DICCIONARIO = "abcdefghijklmnopqrstuvwxyz"
+											+ "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+											+ "áéíóúÁÉÍÓÚàèìòùÀÈÌÒÙäëïöüÄËÏÖÜ"
 											+ "0123456789"
-											+ " ,.-;:_<>{}[]()Â¿?Â¡!+*/\\'\"Â·$%&=|@#";
+											+ " ,.-;:_<>{}[]()¿?¡!+*/\\'\"·$%&=|@#";
+	
+	public static final String KEY = "L|@:v3";
 
 }

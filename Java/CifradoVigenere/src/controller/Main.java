@@ -1,31 +1,27 @@
 package controller;
 
 import bin.ConstValues;
+import model.Criptografia;
 
 public class Main {
 	
 	public static void main(String[] args) {
-		String texto = "Texto de prueba";
-		String key = "ba";
-		String encriptado = "";
+		String mensaje = "Probando encriptación de mensaje.";
+		String mensajeOculto = "Ò|qìy7ósc?v6Z7c?/:Pkq:E7ela·G]Z7-$";
+
+		Criptografia criptografia = new Criptografia();
 		
+		String mensajeEncriptado = criptografia.encripta(mensaje, ConstValues.KEY);
+		String desencriptado = criptografia.desencripta(mensajeEncriptado, ConstValues.KEY);
+
 		
-		for(int i=0, j=0 ; i<texto.length() ; i++, j++) {
-			if(j == key.length()) {
-				j = 0;
-			}
-			
-			int suma = ConstValues.diccionario.indexOf(texto.charAt(i))+ConstValues.diccionario.indexOf(key.charAt(j));
-			
-			if(suma > ConstValues.diccionario.length()-1) {
-				suma = suma - ConstValues.diccionario.length();
-			}
-			
-			encriptado += ConstValues.diccionario.charAt(suma);
-		}
+		System.out.println("Mensaje original\t"+mensaje+"\nEncriptado\t\t"+mensajeEncriptado+"\n");
+		System.out.println("Mensaje encriptado\t"+mensajeEncriptado+"\nDesencriptado\t\t"+desencriptado+"\n");
 		
-		System.out.println(encriptado);
-		
+		/*	Descomentame para desvelar el mensaje oculto :-)
+		String mensajeOcultoDesencriptado = criptografia.desencripta(mensajeOculto, ConstValues.KEY);
+		System.out.println("Mensaje oculto\t\t"+mensajeOculto+"\nDesencriptado\t\t"+mensajeOcultoDesencriptado+"\n");
+		*/
 		
 	}
 
