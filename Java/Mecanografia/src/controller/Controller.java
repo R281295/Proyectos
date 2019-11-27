@@ -14,17 +14,16 @@ import view.Ventana_Mecanografia;
 
 public class Controller implements KeyListener, ActionListener {
     
-    Ventana_Mecanografia ventana_mecanografia;
-    Cronometro cronometro;
-    Thread hiloCrono;
-    boolean cronoActivo = false;
-    int cont = 0;
-    int errores = 0;
-    int pulsacionesTotales = 0;
+    private Ventana_Mecanografia ventana_mecanografia;
+    private Cronometro cronometro;
+    private Thread hiloCrono;
+    private boolean cronoActivo = false;
+    private int cont = 0;
+    private int errores = 0;
+    private int pulsacionesTotales = 0;
     
     public Controller(Ventana_Mecanografia ventana_mecanografia) {
         this.ventana_mecanografia = ventana_mecanografia;
-        
     }
     
     
@@ -47,10 +46,6 @@ public class Controller implements KeyListener, ActionListener {
         }
         
           try {
-            //El siguiente if controla cuando se pulsa la tecla retorno
-            if(ventana_mecanografia.getTexto().getText(cont, 1).charAt(0) == ' ' && evt.getKeyChar() == '\n') { //El primer símbolo que se evalúa es el símbolo Alt+20. En el archivo txt también es éste simbolo
-                cont += 5; //Se suma 5 porque hay que saltar la etiqueta <br>, que son 4 símbolos, por tanto el 5º es el primer carcter de la siguiente línea
-            } 
             //El siguiente if controla que la letra que se haya pulsado sea la correcta
             if(evt.getKeyChar() == ventana_mecanografia.getTexto().getText(cont, 1).charAt(0)) {
                 ventana_mecanografia.getEscritura().setEditable(true);
@@ -61,8 +56,9 @@ public class Controller implements KeyListener, ActionListener {
                     ventana_mecanografia.getEscritura().setEditable(false);
             }   
         } catch (Exception e) {
-            System.out.println("Error al leer caracteres del texto: "+e.toString());
+            System.out.println("Error al leer caracteres del texto: "+e.getMessage());
         }
+          
         //El siguiente if detecta cuando se ha terminado de escribir todo el texto
         if(ventana_mecanografia.getTexto().getText().length()-1 == cont) {
             //Se para el cronómetro.
@@ -73,7 +69,7 @@ public class Controller implements KeyListener, ActionListener {
             try {
                 Thread.sleep(1000); //Esperamos un segundo porque al estar usando el teclado, se le pueda dar a Aceptar del JOptionPane con la barra espaciadora o intro sin querer.
             } catch(Exception e) {
-                JOptionPane.showMessageDialog(ventana_mecanografia, "Error en Thread.sleep: "+e.toString(), "ERROR", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(ventana_mecanografia, "Error en Thread.sleep: "+e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
             }
             JOptionPane.showMessageDialog(ventana_mecanografia, "Tiempo: "+ventana_mecanografia.getTiempo().getText()+"\nPulsaciones: "+pulsacionesTotales+"\nP.P.M.: "+((pulsacionesTotales-errores)*60/(cronometro.getSegundos()+cronometro.getMinutos()*60))+"\nErrores: "+errores*100/pulsacionesTotales+"% ("+errores+")", "Finalizado", JOptionPane.INFORMATION_MESSAGE);
             pulsacionesTotales = 0;
@@ -82,7 +78,7 @@ public class Controller implements KeyListener, ActionListener {
     
     @Override
     public void keyReleased(KeyEvent evt) {
-        //Esto lo que hace es borrar el cuadro de texto cada vez que se escribe un espacio o un enter.
+        //Se borra el cuadro de texto cada vez que se escribe un espacio o un enter
         if(ventana_mecanografia.getEscritura().isEditable() && (evt.getKeyChar() == ' ' || evt.getKeyChar() == '\n')) {
             ventana_mecanografia.getEscritura().setText("");
         }
@@ -128,12 +124,12 @@ public class Controller implements KeyListener, ActionListener {
             }
             escribeLabel();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al cargar/leer el archivo\n"+e.toString(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error al cargar/leer el archivo\n"+e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 fr.close();
             } catch (Exception e2) {
-                JOptionPane.showMessageDialog(null, "Error al cerrar el archivo\n"+e2.toString(), "ERROR", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Error al cerrar el archivo\n"+e2.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
