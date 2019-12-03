@@ -4,10 +4,10 @@ import view.Ventana_Mecanografia;
 
 public class Cronometro implements Runnable {
     
-    Ventana_Mecanografia ventana_mecanografia;
-    boolean activo = false;
-    int segundos = 0;
-    int minutos = 0;
+    private Ventana_Mecanografia ventana_mecanografia;
+    private boolean activo = false;
+    private int segundos = 0;
+    private int minutos = 0;
     
     public Cronometro(Ventana_Mecanografia ventana_mecanografia) {
         this.ventana_mecanografia = ventana_mecanografia;

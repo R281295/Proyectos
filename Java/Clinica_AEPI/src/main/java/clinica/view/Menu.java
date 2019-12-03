@@ -2,9 +2,15 @@ package clinica.view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.*;
 
-import clinica.bin.ConstValues;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+
 import clinica.model.Controller;
 import clinica.model.Decorado;
 import clinica.util.ConexionSQL;
@@ -12,7 +18,7 @@ import clinica.util.ConexionSQL;
 public class Menu extends JFrame implements ActionListener {
     
     Decorado decorado = new Decorado();
-    ConexionSQL sql;
+    ConexionSQL connection;
     
     public Menu() {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -21,9 +27,9 @@ public class Menu extends JFrame implements ActionListener {
         
         //Se crea el MenuBar y los dos menús que va a contener
         JMenuBar menuBar = new JMenuBar();
-        JMenu menu = new JMenu("Menú");
+        JMenu menu = new JMenu("Men�");
         
-        JMenu design = new JMenu("Diseño");
+        JMenu design = new JMenu("Dise�o");
         
         //Se crean todos los items que va a contener el menú
         JMenuItem insertar = new JMenuItem("Insertar");
@@ -33,11 +39,6 @@ public class Menu extends JFrame implements ActionListener {
         
         JMenuItem windows = new JMenuItem("Windows");
         JMenuItem nimbus = new JMenuItem("Nimbus");
-        JMenuItem upperEssential = new JMenuItem("UpperEssential");
-        JMenuItem mac = new JMenuItem("Mac");
-        JMenuItem aero = new JMenuItem("Aero");
-        JMenuItem bernstein = new JMenuItem("Bernstein");
-        JMenuItem noire = new JMenuItem("Noire");
         
         //Se asocian todos lo items a su menú correspondiente
         menu.add(insertar);
@@ -47,13 +48,8 @@ public class Menu extends JFrame implements ActionListener {
         
         design.add(windows);
         design.add(nimbus);
-        design.add(upperEssential);
-        design.add(mac);
-        design.add(aero);
-        design.add(bernstein);
-        design.add(noire);
         
-        //A cada item se le añade un Listener
+        //A cada item se le a�ade un Listener
         insertar.addActionListener(this);
         visualizar.addActionListener(this);
         editar.addActionListener(this);
@@ -61,11 +57,6 @@ public class Menu extends JFrame implements ActionListener {
         
         windows.addActionListener(this);
         nimbus.addActionListener(this);
-        upperEssential.addActionListener(this);
-        mac.addActionListener(this);
-        aero.addActionListener(this);
-        bernstein.addActionListener(this);
-        noire.addActionListener(this);
         
         setJMenuBar(menuBar);
         menuBar.add(menu);
@@ -91,18 +82,19 @@ public class Menu extends JFrame implements ActionListener {
                 Formulario_Insertar_Editar editar = new Formulario_Insertar_Editar();
                 editar.setTitle("Editar");
                 controller = new Controller(editar, null, null);
-                sql = new ConexionSQL();
+                connection = new ConexionSQL();
+                //TODO arreglar esto
                 try {
                 	int id = Integer.parseInt(JOptionPane.showInputDialog("Introduce el ID que deseas editar"));
-                	if(sql.comprobarSiExisteID(id)) {
+                	if(connection.comprobarSiExisteID(id)) {
 	                	controller.rellenarFormulario(id);
 	                	editar.conectarControlador(controller);
 	                    editar.setVisible(true);
                 	} else {
-                		System.out.println("El ID introducido no existe."); //TODO Hacer JOptionPane
+                		JOptionPane.showMessageDialog(null, "El ID introducido no existe.", "Error", JOptionPane.ERROR_MESSAGE);
                 	}
                 }catch(Exception ex) {
-                	System.out.println("El ID introducido no es correcto: "+ex.getMessage()); //TODO Hacer JOptionPane
+                	JOptionPane.showMessageDialog(null, "El ID introducido no es correcto: "+ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
                 
                 break;
@@ -120,49 +112,20 @@ public class Menu extends JFrame implements ActionListener {
                 eliminar.setVisible(true);
                 break;
             case "Windows":
-                setVisible(false);
-                dispose();
-                decorado.decorado(0);
-                Menu windows = new Menu();
+                cambiarDecorado(0);
                 break;
             case "Nimbus":
-                setVisible(false);
-                dispose();
-                decorado.decorado(1);
-                Menu nimbus = new Menu();
-                break;
-            case "UpperEssential":
-                setVisible(false);
-                dispose();
-                decorado.decorado(2);
-                Menu upperEssential = new Menu();
-                break;
-            case "Mac":
-                setVisible(false);
-                dispose();
-                decorado.decorado(3);
-                Menu mac = new Menu();
-                break;
-            case "Aero":
-                setVisible(false);
-                dispose();
-                decorado.decorado(4);
-                Menu aero = new Menu();
-                break;
-            case "Bernstein":
-                setVisible(false);
-                dispose();
-                decorado.decorado(5);
-                Menu bernstein = new Menu();
-                break;
-            case "Noire":
-                setVisible(false);
-                dispose();
-                decorado.decorado(6);
-                Menu noire = new Menu();
+                cambiarDecorado(1);
                 break;
                 
         }
+    }
+    
+    private void cambiarDecorado(int decorado) {
+    	setVisible(false);
+        dispose();
+        this.decorado.decorado(decorado);
+        new Menu();
     }
     
 

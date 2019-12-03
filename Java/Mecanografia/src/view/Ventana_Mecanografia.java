@@ -7,7 +7,7 @@ import javax.swing.*;
 
 import controller.Controller;
 
-public class Ventana_Mecanografia extends JFrame implements Runnable {
+public class Ventana_Mecanografia extends JFrame {
     
     private JMenuBar menuBar;
     private JMenu aprendizaje;
@@ -133,8 +133,7 @@ public class Ventana_Mecanografia extends JFrame implements Runnable {
         panel.setBackground(new Color(200, 255, 200));
         panel.setLayout(layout);
         
-        texto = new JTextArea();
-//        panel.add(texto, constraints); NO SE AÑADE AL PANEL YA QUE ESTO ES INVISIBLE
+        texto = new JTextArea(); //No se añade al JPanel puesto que es invisible
 
         tiempo = new JLabel("00:00");
         tiempo.setOpaque(true);
@@ -245,11 +244,6 @@ public class Ventana_Mecanografia extends JFrame implements Runnable {
         random.addActionListener(c);
     }
     
-    
-    @Override
-    public void run() {
-        System.out.println("Run de Ventana");
-    }
     
     public JTextArea getTexto() {
     	return texto;
